@@ -1,0 +1,24 @@
+from rest_framework import generics
+
+from .models import Cat
+from .serializers import CatSerializer
+
+
+class CatList(generics.ListCreateAPIView):
+    queryset = Cat.objects.all()
+    serializer_class = CatSerializer
+
+
+class CatDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Cat.objects.all()
+    serializer_class = CatSerializer
+
+
+from django.urls import path
+
+from cats.views import CatList, CatDetail
+
+urlpatterns = [
+    path('cats/', CatList.as_view()),
+    path('cats/<int:pk>/', CatDetail.as_view()),
+]
